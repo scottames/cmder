@@ -205,7 +205,7 @@ func (l logger) timestamp(color string) string {
 
 	now := time.Now().Format(LoggerTimeFormat)
 
-	return fmt.Sprint(color + " : " + now + string(LoggerClear))
+	return color + " : " + now + string(LoggerClear)
 }
 
 func (l logger) getColor() Color {

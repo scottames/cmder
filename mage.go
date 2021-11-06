@@ -4,6 +4,7 @@
 package main
 
 import (
+	"github.com/magefile/mage/mg"
 	"github.com/scottames/cmder"
 )
 
@@ -13,8 +14,7 @@ var (
 
 // Check run checks
 func Check() {
-	Lint()
-	Test()
+	mg.Deps(Lint, Test)
 }
 
 // Lint run golangci-lint
