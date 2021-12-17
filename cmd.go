@@ -21,7 +21,7 @@ func DryRun() {
 	dryRun = true
 }
 
-// NewCmd returns a new os/exec builder command implemented using the Cmder interface
+// New returns a new os/exec builder command implemented using the Cmder interface
 func New(command ...string) Cmder {
 	c := &cmd{strings: command}
 	c.ctx = context.Background()

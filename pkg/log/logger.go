@@ -26,6 +26,7 @@ type Logger interface {
 	Logf(format string, v ...interface{})
 }
 
+// Color a string alias for logging colors
 type Color string
 
 var (
@@ -41,7 +42,7 @@ var (
 	// if the default logger is used and Silent is not specified
 	LoggerColor = LoggerTeal
 
-	// LoggerDryrunColor the color used to print the LoggerDryRunKey when DryRun
+	// LoggerDryRunColor the color used to print the LoggerDryRunKey when DryRun
 	// is invoked if the default logger is used and Silent is not specified
 	LoggerDryRunColor = LoggerYellow
 
@@ -138,6 +139,7 @@ func init() {
 	}
 }
 
+// New returns a new logger instance which implements the Logger interface
 func New() *logger { //nolint:revive // the intention is to leverage the methods and interface
 	return &logger{key: LoggerKey, color: LoggerColor}
 }
