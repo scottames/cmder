@@ -1,5 +1,9 @@
 # Cmder
 
+[![Checks](https://github.com/scottames/cmder/actions/workflows/check.yml/badge.svg)](https://github.com/scottames/cmder/actions/workflows/check.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/scottames/cmder.svg)](https://pkg.go.dev/github.com/scottames/cmder)
+[![Go Report Card](https://goreportcard.com/badge/github.com/scottames/cmder)](https://goreportcard.com/report/github.com/scottames/cmder)
+
 Cmder implements builder functionality wrapping os/exec for easily constructing shell commands. The
 initial intended use for this package was simple scripting with [Mage](https://github.com/magefile/mage), but there is nothing that
 should stop it from being used in other implementations.
