@@ -2,12 +2,15 @@ package cmder_test
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"testing"
 
-	"github.com/scottames/cmder"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/scottames/cmder"
 )
 
 const (
@@ -143,7 +146,7 @@ func (t testLogger) Log(v ...interface{}) {
 }
 
 func (t testLogger) Logf(format string, v ...interface{}) {
-	logCmdStr = fmt.Sprint(v...)
+	logCmdStr = fmt.Sprintf(format, v...)
 }
 
 func Test_LogCmd(t *testing.T) {
@@ -298,7 +301,12 @@ func Test_StartWait(t *testing.T) {
 }
 
 func Test_String(t *testing.T) {
-	expected := "/usr/bin/echo foo"
+	echoBin := exec.Command("echo")
+	if errors.Is(echoBin.Err, exec.ErrDot) {
+		echoBin.Err = nil
+	}
+
+	expected := fmt.Sprintf("%s foo", echoBin.Path)
 	actual := cmder.New(echo, foo).String()
 	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)

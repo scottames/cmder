@@ -205,14 +205,14 @@ func (c *cmd) Run(w ...io.Writer) error {
 
 func (c *cmd) RunFn(w ...io.Writer) func(args ...string) error {
 	return func(args ...string) error {
-		return c.Clone().Args(args...).Run()
+		return c.Clone().Args(args...).Run(w...)
 	}
 }
 
 func (c *cmd) RunFnCmd(w ...io.Writer) func(args ...string) (Cmder, error) {
 	return func(args ...string) (Cmder, error) {
 		clone := c.Clone().Args(args...)
-		err := clone.Run()
+		err := clone.Run(w...)
 
 		return clone, err
 	}
@@ -242,14 +242,14 @@ func (c *cmd) Start(w ...io.Writer) error {
 
 func (c *cmd) StartFn(w ...io.Writer) func(args ...string) error {
 	return func(args ...string) error {
-		return c.Clone().Args(args...).Start()
+		return c.Clone().Args(args...).Start(w...)
 	}
 }
 
 func (c *cmd) StartFnCmd(w ...io.Writer) func(args ...string) (Cmder, error) {
 	return func(args ...string) (Cmder, error) {
 		clone := c.Clone().Args(args...)
-		err := clone.Start()
+		err := clone.Start(w...)
 
 		return clone, err
 	}

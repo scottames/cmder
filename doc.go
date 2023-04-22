@@ -4,5 +4,4 @@
 
 // Package cmder implements builder functionality wrapping os/exec for easily
 // constructing shell commands
-//
 package cmder

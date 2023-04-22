@@ -6,6 +6,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/go-test/deep"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -74,43 +75,55 @@ var (
 func Test_New(t *testing.T) {
 	expected := &testCmd1
 	actual := New(echo, foo)
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_ArgsSingle(t *testing.T) {
 	expected := &testCmd2
 	actual := New(echo, foo).Args(bar)
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_ArgsMultiple(t *testing.T) {
 	expected := &testCmd3
 	actual := New(echo, foo).Args(bar, baz)
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_Clone(t *testing.T) {
 	expected := &testCmd1
 	actual := New(echo, foo).Clone()
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_Ctx(t *testing.T) {
 	expected := &testCmd4
 	actual := New(echo, foo).Ctx(context.Background())
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_Dir(t *testing.T) {
 	expected := &testCmd5
 	actual := New(echo, foo).Dir(tmp)
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_DryRunGlobal(t *testing.T) {
@@ -125,8 +138,9 @@ func Test_DryRunGlobal(t *testing.T) {
 
 	actual := cmd.Complete()
 
-	msg := fmt.Sprintf("Expected %t. Got %t.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 
 	dryRun = false
 }
@@ -134,8 +148,10 @@ func Test_DryRunGlobal(t *testing.T) {
 func Test_Env(t *testing.T) {
 	expected := &testCmd6
 	actual := New(echo, foo).Env(envFooBar)
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
 
 func Test_RunFnCmd(t *testing.T) {
@@ -181,6 +197,7 @@ func Test_clearStdOutStdErr(t *testing.T) {
 	actual.stderr = os.Stderr
 	actual.clearStdOutStdErr()
 
-	msg := fmt.Sprintf("Expected %v. Got %v.", expected, actual)
-	assert.Equal(t, expected, actual, msg)
+	if diff := deep.Equal(expected, actual); diff != nil {
+		t.Error(diff)
+	}
 }
