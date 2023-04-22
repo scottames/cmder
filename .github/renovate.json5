@@ -1,0 +1,58 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:base',
+    ':semanticCommitTypeAll(chore)',
+    ':preserveSemverRanges',
+    'github>whitesource/merge-confidence:beta',
+  ],
+  repositories: [
+    'scottames/cmdr'
+  ],
+  automergeStrategy: 'squash',
+  dependencyDashboard: true,
+  labels: [
+    'dependencies'
+  ],
+  onboarding: false,
+  onboardingPrTitle: 'chore(deps): onboard with renovate',
+  platform: "github",
+  platformAutomerge: true,
+  pruneStaleBranches: true,
+  rebaseWhen: 'behind-base-branch',
+  semanticCommitScope: 'deps',
+  semanticCommitType: 'chore',
+  semanticCommits: 'enabled',
+  postUpdateOptions: [
+    'gomodTidy',
+    'gomodUpdateImportPaths'
+  ],
+  gomod: {
+    enabled: true,
+    commitMessageTopic: '⇡ golang module {{depName}}'
+  },
+  vulnerabilityAlerts: {
+    enabled: true,
+    labels: [
+      'security'
+    ]
+  },
+  packageRules: [
+    {
+      matchFiles: [
+        'mage.go'
+      ],
+      groupName: 'mage',
+      commitMessageTopic: '⇡ mage {{depName}}'
+    },
+    {
+      matchFiles: [
+        '.github'
+      ],
+      groupName: 'github-actions',
+      automerge: true,
+      commitMessageTopic: '⇡ github actions {{depName}}',
+      matchUpdateTypes: ['minor', 'patch']
+    }
+  ]
+}
