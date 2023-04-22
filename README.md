@@ -1,6 +1,6 @@
 # Cmder
 
-[![Checks](https://github.com/scottames/cmder/actions/workflows/check.yml/badge.svg)](https://github.com/scottames/cmder/actions/workflows/check.yml)
+[![Lint & Test](https://github.com/scottames/cmder/actions/workflows/pull_request.yml/badge.svg)](https://github.com/scottames/cmder/actions/workflows/pull_request.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/scottames/cmder.svg)](https://pkg.go.dev/github.com/scottames/cmder)
 [![Go Report Card](https://goreportcard.com/badge/github.com/scottames/cmder)](https://goreportcard.com/report/github.com/scottames/cmder)
 
