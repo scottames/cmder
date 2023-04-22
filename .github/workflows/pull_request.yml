@@ -1,33 +1,36 @@
-name: checks
-
+name: Lint & Test
 on: [pull_request]
 jobs:
   check:
+    name: Check
     runs-on: ubuntu-latest
-
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Trunk
+        uses: trunk-io/trunk-action@v1
+  test:
+    name: Test
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Setup Go
         uses: actions/setup-go@v2
-
       - name: Checkout mage
         uses: actions/checkout@v2
         with:
           repository: magefile/mage
           path: mage
-
       - name: Install mage
         run: |
           cd mage
           mkdir -p "$(go env GOPATH)"
           go run bootstrap.go
-
       - name: Install golangci-lint
         run: |
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" latest
-
-      - name: Run checks
+      - name: Run checks via mage
         run: |
-          export PATH="${PATH}:$(go env GOPATH)/bin"
-          mage check
+          GOBIN="$(go env GOPATH)/bin"
+          export PATH="${PATH}:${GOBIN}"
+          mage test

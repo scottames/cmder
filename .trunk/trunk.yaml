@@ -1,0 +1,33 @@
+version: 0.1
+cli:
+  version: 1.8.1
+plugins:
+  sources:
+    - id: trunk
+      ref: v0.0.16
+      uri: https://github.com/trunk-io/plugins
+lint:
+  enabled:
+    - actionlint@1.6.24
+    - git-diff-check
+    - gitleaks@8.16.3
+    - gofmt@1.19.3
+    - golangci-lint@1.52.2
+    - markdownlint@0.33.0
+    - prettier@2.8.7
+    - yamllint@1.30.0
+runtimes:
+  enabled:
+    - go@1.19.5
+    - node@18.12.1
+    - python@3.10.8
+actions:
+  enabled:
+    - trunk-announce # Git hook for displaying commits tagged with '/trunk announce'
+    - trunk-check-pre-push # Run 'trunk check' whenever you run 'git push'
+    - trunk-fmt-pre-commit # Run 'trunk fmt' whenever you run 'git commit'
+    - trunk-upgrade-available # Check for and notify about the latest version of the trunk cli
+    - go-mod-tidy # Runs go mod tidy when changes are detected to go.mod.
+    - go-mod-tidy-vendor # Runs go mod tidy followed by go mod vendor.
+    - hello-world-python # Prints 'Hello World' to the terminal during pre-commit trigger
+    - trunk-check-pre-commit # Run 'trunk check' whenever you run 'git commit'
