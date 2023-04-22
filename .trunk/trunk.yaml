@@ -29,5 +29,4 @@ actions:
     - trunk-upgrade-available # Check for and notify about the latest version of the trunk cli
     - go-mod-tidy # Runs go mod tidy when changes are detected to go.mod.
     - go-mod-tidy-vendor # Runs go mod tidy followed by go mod vendor.
-    - hello-world-python # Prints 'Hello World' to the terminal during pre-commit trigger
     - trunk-check-pre-commit # Run 'trunk check' whenever you run 'git commit'
