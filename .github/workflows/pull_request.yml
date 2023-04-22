@@ -13,11 +13,11 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Go
         uses: actions/setup-go@v2
       - name: Checkout mage
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: magefile/mage
           path: mage
