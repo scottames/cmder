@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
+
+	"golang.org/x/term"
 )
 
 // Logger is a generic logging interface
@@ -176,12 +179,65 @@ func (l logger) Logf(format string, v ...interface{}) {
 	fmt.Printf(s+format+timestamp+"\n", v...)
 }
 
+// splitArgsToNewLine returns a new string formatted as a shell command as if being executed
+// on multiple lines - padding between the [] of the command (slice) to be printed
+func splitArgsToNewLine(s string) string {
+	var result string
+
+	const (
+		bBracket = "["
+		eBracket = "]"
+	)
+
+	newArgs := []string{}
+	args := strings.Split(s, " ")
+
+	for _, w := range args {
+		if strings.HasPrefix(w, bBracket) {
+			w = strings.Replace(w, bBracket, bBracket+"\n\n ", 1)
+		}
+
+		if strings.HasSuffix(w, eBracket) {
+			i := strings.LastIndex(w, eBracket)
+			w = w[:i] + strings.Replace(w[i:], eBracket, "\n\n"+eBracket, 1)
+		}
+
+		if strings.Contains(w, eBracket+string(LoggerColor)) {
+			w = strings.Replace(w, eBracket+string(LoggerColor), "\n\n"+eBracket+string(LoggerColor), 1)
+		}
+
+		if strings.HasPrefix(w, "-") {
+			newArgs = append(newArgs, "\\\n   "+w)
+		} else {
+			newArgs = append(newArgs, w)
+		}
+	}
+
+	result = strings.Join(newArgs, " ")
+
+	return result
+}
+
+// stringLen returns the length of a given string
+func stringLen(s string) int {
+	return len([]rune(s))
+}
+
 // Log implements the Logger interface
 func (l logger) Log(v ...interface{}) {
 	s := l.prependStr()
 	timestamp := l.timestamp(string(LoggerDarkGrey))
+	msg := fmt.Sprintf("%v", v...)
 
-	fmt.Printf(s+"%v"+timestamp+"\n", v...)
+	termWidth, _, err := term.GetSize(int(os.Stdin.Fd()))
+	if err == nil {
+		absLen := stringLen(msg) + stringLen(s) + stringLen(timestamp)
+		if absLen > termWidth {
+			msg = splitArgsToNewLine(msg)
+		}
+	}
+
+	fmt.Printf(s+"%s"+timestamp+"\n", msg)
 }
 
 func (l logger) prependStr() string {
