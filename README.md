@@ -28,7 +28,7 @@ Additionally many of the tests can provide some example usage.
 
 ### Logging
 
-Cmder logs all commands being run using the specified, using the `Logger` method, logger which implements the [`Logger`](https://github.com/scottames/cmder/blob/master/pkg/log/logger.go#L10-L27) interface.
+Cmder logs all commands being run, using the `Logger` method, which implements the [`Logger`](https://github.com/scottames/cmder/blob/master/pkg/log/logger.go#L10-L27) interface:
 
 ```golang
 type Logger interface {
@@ -43,11 +43,13 @@ type Logger interface {
 }
 ```
 
-By default (if none specified with the `Logger` method) the built-in logger will be used. See Additional `log.Logger*` variables for configuration
+By default (if none specified with the `Cmder.Logger()` method) the built-in [logger](pkg/log/logger.go) will be used. See Additional `log.Logger*` variables for configuration
 options.
 
 Color is disabled by default, but can be enabled by setting either `MAGEFILE_ENABLE_COLOR` or
 `CMDER_ENABLE_COLOR` environment variables to true.
+
+The default logger will check the terminal width and if the command to be printed is wider than the terminal width, it will be broken up into multiple lines, similar to a shell command represented on multiple lines.
 
 ## Contributing
 
